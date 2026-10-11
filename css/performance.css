@@ -1,0 +1,17 @@
+/* Same full-screen photo and positioning as Butterfly; smaller files per viewport. */
+#page-header.full_page.optimized-hero {
+  background-image: url('/assets/mainpage-desktop.webp');
+}
+
+@media (max-width: 767px) and (max-aspect-ratio: 3/5) {
+  #page-header.full_page.optimized-hero {
+    background-image: url('/assets/mainpage-mobile.webp');
+  }
+}
+
+@media (max-width: 767px) {
+  #page-header.full_page.optimized-hero {
+    /* Avoid repainting a fixed, full-screen background during touch scrolling. */
+    background-attachment: scroll;
+  }
+}

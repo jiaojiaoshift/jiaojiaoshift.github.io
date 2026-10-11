@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>walone的个人博客 | walone的个人博客</title><meta name="author" content="jiaojiaoshift"><meta name="copyright" content="jiaojiaoshift"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="UART串口通讯输出重定向重写fputc函数让数据发向上位机 1234567#include <stdio.h>int fputc(int ch, FILE *f) {		HAL_UART_Transmit(&amp;huart1, (uint8_t *)&amp;ch, 1, 0xffff);		return ch; }  这样就可以让正常使用printf并让它输">
+<meta property="og:type" content="article">
+<meta property="og:title" content="walone的个人博客">
+<meta property="og:url" content="https://philia093.moe/2025/10/02/UART%E5%85%B3%E4%BA%8E%E4%B8%AD%E6%96%AD%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="walone的个人博客">
+<meta property="og:description" content="UART串口通讯输出重定向重写fputc函数让数据发向上位机 1234567#include <stdio.h>int fputc(int ch, FILE *f) {		HAL_UART_Transmit(&amp;huart1, (uint8_t *)&amp;ch, 1, 0xffff);		return ch; }  这样就可以让正常使用printf并让它输">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://philia093.moe/assets/head.webp">
+<meta property="article:published_time" content="2025-10-01T16:01:15.834Z">
+<meta property="article:modified_time" content="2025-10-06T10:38:22.583Z">
+<meta property="article:author" content="jiaojiaoshift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://philia093.moe/assets/head.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://philia093.moe/2025/10/02/UART%E5%85%B3%E4%BA%8E%E4%B8%AD%E6%96%AD%E7%9A%84%E9%97%AE%E9%A2%98/",
+  "image": "https://philia093.moe/assets/head.webp",
+  "datePublished": "2025-10-01T16:01:15.834Z",
+  "dateModified": "2025-10-06T10:38:22.583Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "jiaojiaoshift",
+      "url": "https://philia093.moe"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://philia093.moe/2025/10/02/UART%E5%85%B3%E4%BA%8E%E4%B8%AD%E6%96%AD%E7%9A%84%E9%97%AE%E9%A2%98/index.html"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'walone的个人博客',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/performance.css"><meta name="generator" content="Hexo 7.3.0"><noscript><style>#footer{background-image:url("/assets/bottom.webp")}</style></noscript></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/head.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar" loading="lazy" decoding="async" width="256" height="256"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">walone的个人博客</span></a><a class="nav-page-title" href="/"><span class="site-name">walone的个人博客</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">无标题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-01T16:01:15.834Z" title="发表于 2025-10-02 00:01:15">2025-10-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-06T10:38:22.583Z" title="更新于 2025-10-06 18:38:22">2025-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="UART串口通讯"><a href="#UART串口通讯" class="headerlink" title="UART串口通讯"></a>UART串口通讯</h1><h2 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h2><p>重写fputc函数让数据发向上位机</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">fputc</span><span class="params">(<span class="type">int</span> ch, FILE *f)</span></span><br><span class="line"> {</span><br><span class="line">		HAL_UART_Transmit(&amp;huart1, (<span class="type">uint8_t</span> *)&amp;ch, <span class="number">1</span>, <span class="number">0xffff</span>);</span><br><span class="line">		<span class="keyword">return</span> ch;</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这样就可以让正常使用printf并让它输出到电脑的串口助手以方便调试。</p>
+<h2 id="阻塞模式：主要函数"><a href="#阻塞模式：主要函数" class="headerlink" title="阻塞模式：主要函数"></a>阻塞模式：主要函数</h2><p>阻塞模式意味着该函数会一直停留在当前调用位置，直到数据发送完成或发生超时。这种模式可能会 导致程序在数据传输期间停止响应其他任务，因此它适合较短时间的通信任务。</p>
+<h3 id="串口阻塞方式接收函数HAL-UART-Receive"><a href="#串口阻塞方式接收函数HAL-UART-Receive" class="headerlink" title="串口阻塞方式接收函数HAL_UART_Receive"></a>串口阻塞方式接收函数HAL_UART_Receive</h3><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_UART_Receive</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData,</span></span><br><span class="line"><span class="params"> <span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h3 id="串口阻塞方式发送函数HAL-UART-Transmit"><a href="#串口阻塞方式发送函数HAL-UART-Transmit" class="headerlink" title="串口阻塞方式发送函数HAL_UART_Transmit"></a>串口阻塞方式发送函数HAL_UART_Transmit</h3><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_UART_Transmit</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">const</span> <span class="type">uint8_t</span> *pData,</span></span><br><span class="line"><span class="params"><span class="type">uint16_t</span> Size, <span class="type">uint32_t</span> Timeout)</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<p>注意，在中断函数(TIM,UART,…)里，用阻塞发送可能没问题，<strong>但是用阻塞接收大概率会直接卡死</strong></p>
+<h2 id="中断模式：主要函数和时间线（自上而下）"><a href="#中断模式：主要函数和时间线（自上而下）" class="headerlink" title="中断模式：主要函数和时间线（自上而下）"></a>中断模式：主要函数和时间线（自上而下）</h2><h3 id="——最好把耗时的程序都从中断回调里拿走，放到主函数！"><a href="#——最好把耗时的程序都从中断回调里拿走，放到主函数！" class="headerlink" title="——最好把耗时的程序都从中断回调里拿走，放到主函数！"></a><em><strong>——最好把耗时的程序都从中断回调里拿走，放到主函数！</strong></em></h3><h3 id="串口中断方式接收函数HAL-UART-Receive-IT"><a href="#串口中断方式接收函数HAL-UART-Receive-IT" class="headerlink" title="串口中断方式接收函数HAL_UART_Receive_IT"></a>串口中断方式接收函数HAL_UART_Receive_IT</h3><p>第一次调用该函数会使能中断，因为硬件默认禁用外部中断所以需要使能。并且该函数会对存储数据的属性做配置，将状态机状态转换成HAL_UART_STATE_BUSY_RX。注意，这个函数不会调起RXNE标志。并且在做完这些事情后迅速返回主循环。只是起到使能硬件和刷新状态机的作用。硬件会在后台等待数据的到来。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_UART_Receive_IT</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">// 这里只设置软件状态和使能中断</span></span><br><span class="line">    huart-&gt;pRxBuffPtr = pData;    <span class="comment">// 数据存到哪里</span></span><br><span class="line">    huart-&gt;RxXferCount = Size;    <span class="comment">// 要接收多少字节  </span></span><br><span class="line">    huart-&gt;RxState = HAL_UART_STATE_BUSY_RX;  <span class="comment">// 软件状态</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 关键：只使能中断，不设置RXNE标志！</span></span><br><span class="line">    <span class="comment">// 使能中断只用调用一次该函数即可完成。</span></span><br><span class="line">    SET_BIT(huart-&gt;Instance-&gt;CR1, USART_CR1_RXNEIE);  <span class="comment">// 允许硬件通知我们</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> HAL_OK;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="后台硬件"><a href="#后台硬件" class="headerlink" title="后台硬件"></a>后台硬件</h3><p>如果有数据，硬件自动挂起RXNE标志，该标志是中断启用的一个条件，在标志挂起后，NVIC检测到需求，并直接暂停CPU当前指令</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这是硬件自动完成的，不是软件代码！</span></span><br><span class="line">USART1-&gt;SR |= USART_SR_RXNE;  <span class="comment">// 硬件自动设置RXNE标志</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="函数HAL-UART-IRQHandler"><a href="#函数HAL-UART-IRQHandler" class="headerlink" title="函数HAL_UART_IRQHandler"></a>函数HAL_UART_IRQHandler</h3><p>在状态机状态为HAL_UART_STATE_BUSY_RX，RXNE标志挂起，使能中断的条件下该函数开始接收数据并存储。接收完成后，将RXNE标志撤下，把状态机的状态改为 HAL_UART_STATE_READY，最后调用用户的<strong>Callback中断回调</strong>函数。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_UART_IRQHandler</span><span class="params">(UART_HandleTypeDef *huart)</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">// 这个函数在中断发生时被自动调用</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* 接收中断处理 */</span></span><br><span class="line">    <span class="keyword">if</span>((__HAL_UART_GET_IT(huart, UART_IT_RXNE) != RESET) &amp;&amp; </span><br><span class="line">       (__HAL_UART_GET_IT_SOURCE(huart, UART_IT_RXNE) != RESET)) {</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 关键：只有在BUSY_RX状态下才处理！</span></span><br><span class="line">        <span class="keyword">if</span>(huart-&gt;RxState == HAL_UART_STATE_BUSY_RX) {</span><br><span class="line">            <span class="comment">// 读取硬件数据寄存器</span></span><br><span class="line">            <span class="type">uint8_t</span> received_data = (<span class="type">uint8_t</span>)(huart-&gt;Instance-&gt;DR);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 存储到用户缓冲区</span></span><br><span class="line">            *huart-&gt;pRxBuffPtr = received_data;</span><br><span class="line">            huart-&gt;pRxBuffPtr++;</span><br><span class="line">            huart-&gt;RxXferCount--;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 如果接收完成</span></span><br><span class="line">            <span class="keyword">if</span>(huart-&gt;RxXferCount == <span class="number">0U</span>) {</span><br><span class="line">                <span class="comment">// 清除RXNE中断标志</span></span><br><span class="line">                __HAL_UART_CLEAR_IT(huart, UART_CLEAR_RXNE);</span><br><span class="line">                <span class="comment">// 状态改为READY</span></span><br><span class="line">                huart-&gt;RxState = HAL_UART_STATE_READY;</span><br><span class="line">                <span class="comment">// 调用用户回调函数</span></span><br><span class="line">                HAL_UART_RxCpltCallback(huart);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>基于以上，我们可以把中断回调函数写成这样（<strong>无论什么中断里面最好不要加阻塞！！！</strong>）</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef*huart)</span></span><br><span class="line">{</span><br><span class="line"> 	<span class="keyword">if</span> (huart==&amp;huart1)</span><br><span class="line">    	{</span><br><span class="line"> 			quene[tail++] =aRxBuffer;<span class="comment">//某些需要的命令</span></span><br><span class="line"> 			HAL_UART_Receive_IT(&amp;huart1,(<span class="type">uint8_t</span>*)&amp;aRxBuffer,<span class="number">1</span>);</span><br><span class="line"> 		}</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这样可以保持接收数据结束后一直是BUSY状态，也就是说数据到来之后我们不必再次调用HAL_UART_Receive_IT函数，注意，此时调用完HAL_UART_Receive_IT会直接返回去执行主循环的程序，并继续执行主循环，这种写法可以代替HAL_UART_Receive_IT在主循环中来回调用的写法。不仅如此，这样在添加了一些判断条件的前提下，可以一个一个接收字节。带来的好处，就是当我们不知道有多少字节输入或者输出的时候，不会因为数据比预料的短而超时并造成数据接收失败。</p>
+<h2 id="DMA模式：主要函数和注意点"><a href="#DMA模式：主要函数和注意点" class="headerlink" title="DMA模式：主要函数和注意点"></a>DMA模式：主要函数和注意点</h2><p>DMA的最大的好处就是CPU占用率极低</p>
+<h3 id="DMA发送函数-HAL-UART-Transmit-DMA"><a href="#DMA发送函数-HAL-UART-Transmit-DMA" class="headerlink" title="DMA发送函数    HAL_UART_Transmit_DMA"></a>DMA发送函数    HAL_UART_Transmit_DMA</h3><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_UART_Transmit_DMA</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData,</span></span><br><span class="line"><span class="params"> <span class="type">uint16_t</span> Size)</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>在使用该函数前，最好在stm32f1xx_hal_uart.c 中的HAL_UART_Transmit_DMA里的</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ATOMIC_SET_BIT(huart-&gt;Instance-&gt;CR3, USART_CR3_DMAT);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>下面加一行</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">huart-&gt;gState = HAL_UART_STATE_READY;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>以及时更新状态机防止意外的堵塞</p>
+<p>相应的中断回调函数(如果有需要就要自己写)</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_UART_TxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="DMA接收函数"><a href="#DMA接收函数" class="headerlink" title="DMA接收函数"></a>DMA接收函数</h3><p>接收方式有两种，对应了HAL库中两组不同的函数</p>
+<p><strong>第一类</strong></p>
+<p>正常DMA中断接收函数</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_UART_Receive_DMA</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData,</span></span><br><span class="line"><span class="params"> <span class="type">uint16_t</span> Size)</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>对应的中断回调函数</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>适用场景：<strong>定长协议发送，对实时性要求很高的地方</strong></p>
+<p>注意，接收需要考虑时序问题，如果刚调用完接收函数就直接去处理数据，最后处理的结果是乱掉的，因为还未接收完，而主频很高就直接执行下一行了。并且，在接收数据密度很高的情况下，两次采集之间要给缓冲时间。否则哪一次都采集不到就被下一次打断了，最好的方法就是把下一次接收放到接收中断回调的最后一行。</p>
+<p><strong>第二类</strong></p>
+<p>DMA空闲中断接收函数</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_UARTEx_ReceiveToIdle_DMA</span><span class="params">(&amp;huart2, (<span class="type">uint8_t</span>*)receive_buffer,MAX_RECEIVE_SIZE)</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>当调用此函数时，DMA开始接收，直到读到空闲位（即该位没有数据发送），然后DMA触发中断，对应的中断回调函数</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_UARTEx_RxEventCallback</span><span class="params">(UART_HandleTypeDef *huart,<span class="type">uint16_t</span> Size)</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>适用场景：<strong>不定长协议发送，对实时性要求没有那么高的地方。</strong></p>
+<p>注意，当你调用一次中断接收函数时，**它不止会进入中断回调函数一次！**它在一次打断后会继续接收数据直到下一次读到空闲位并再一次进入中断回调函数，直到你的缓冲区满了。MAX_RECEIVE_SIZE就是你的缓冲区大小，而Size是它这一次读了多少数据（size的得出是因为内部有一个向下计数的计数器）。所以如果你想一次读一个的话，也是将接收函数写在中断回调的末尾。而非TIM里，这样会让TIM的打断变的不准确并且你读到的数据不一定完整（<strong>无论什么中断里面最好不要加阻塞！！！</strong>）。</p>
+<p>比如我要通过UART从驱动板获取电机编码器数据，而编码器数据是不定长协议（因为速度大小在变）</p>
+<p>我就可以这样</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_UARTEx_RxEventCallback</span><span class="params">(UART_HandleTypeDef *huart,<span class="type">uint16_t</span> Size)</span></span><br><span class="line">{</span><br><span class="line">	<span class="keyword">if</span>(huart==&amp;huart2)</span><br><span class="line">	{ </span><br><span class="line">		dealing_data();<span class="comment">//这一步应该放到主循环用环形队列处理，以免影响中断响应速度</span></span><br><span class="line">		clear_receive_data();</span><br><span class="line">		HAL_UARTEx_ReceiveToIdle_DMA(&amp;huart2,(<span class="type">uint8_t</span>*)receive_buffer,MAX_RECEIVE_SIZE);</span><br><span class="line">	}</span><br><span class="line">}	 </span><br></pre></td></tr></tbody></table></figure>
+
+<p>对于不定长信息接收</p>
+<p>可以采用队列一个一个字符收，也可以采用空闲中断一次一次收</p>
+<p><strong>如果选择空闲中断：</strong></p>
+<ul>
+<li>数据有明确帧结构</li>
+<li>帧间有足够空闲时间</li>
+<li>追求CPU效率</li>
+<li>数据量不大</li>
+</ul>
+<p><strong>如果选择字符接收：</strong></p>
+<ul>
+<li>实时性要求极高</li>
+<li>数据流连续无间隔</li>
+<li>协议复杂需要逐字解析</li>
+<li>资源受限缓冲区小</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://philia093.moe">jiaojiaoshift</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://philia093.moe/2025/10/02/UART%E5%85%B3%E4%BA%8E%E4%B8%AD%E6%96%AD%E7%9A%84%E9%97%AE%E9%A2%98/">https://philia093.moe/2025/10/02/UART%E5%85%B3%E4%BA%8E%E4%B8%AD%E6%96%AD%E7%9A%84%E9%97%AE%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://philia093.moe" target="_blank">walone的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/assets/head.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/vendor/sharejs/css/share.min.css" media="print" onload="this.media='all'"><script src="/vendor/sharejs/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width no-desc" href="/2025/09/08/jlysdsb/" title="jlysdsb"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">jlysdsb</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/head.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar" loading="lazy" decoding="async" width="256" height="256"></div><div class="author-info-name">jiaojiaoshift</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#UART%E4%B8%B2%E5%8F%A3%E9%80%9A%E8%AE%AF"><span class="toc-number">1.</span> <span class="toc-text">UART串口通讯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">1.1.</span> <span class="toc-text">输出重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%BC%8F%EF%BC%9A%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">阻塞模式：主要函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E5%8F%A3%E9%98%BB%E5%A1%9E%E6%96%B9%E5%BC%8F%E6%8E%A5%E6%94%B6%E5%87%BD%E6%95%B0HAL-UART-Receive"><span class="toc-number">1.2.1.</span> <span class="toc-text">串口阻塞方式接收函数HAL_UART_Receive</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E5%8F%A3%E9%98%BB%E5%A1%9E%E6%96%B9%E5%BC%8F%E5%8F%91%E9%80%81%E5%87%BD%E6%95%B0HAL-UART-Transmit"><span class="toc-number">1.2.2.</span> <span class="toc-text">串口阻塞方式发送函数HAL_UART_Transmit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E6%A8%A1%E5%BC%8F%EF%BC%9A%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0%E5%92%8C%E6%97%B6%E9%97%B4%E7%BA%BF%EF%BC%88%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">中断模式：主要函数和时间线（自上而下）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%94%E2%80%94%E6%9C%80%E5%A5%BD%E6%8A%8A%E8%80%97%E6%97%B6%E7%9A%84%E7%A8%8B%E5%BA%8F%E9%83%BD%E4%BB%8E%E4%B8%AD%E6%96%AD%E5%9B%9E%E8%B0%83%E9%87%8C%E6%8B%BF%E8%B5%B0%EF%BC%8C%E6%94%BE%E5%88%B0%E4%B8%BB%E5%87%BD%E6%95%B0%EF%BC%81"><span class="toc-number">1.3.1.</span> <span class="toc-text">——最好把耗时的程序都从中断回调里拿走，放到主函数！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E6%96%B9%E5%BC%8F%E6%8E%A5%E6%94%B6%E5%87%BD%E6%95%B0HAL-UART-Receive-IT"><span class="toc-number">1.3.2.</span> <span class="toc-text">串口中断方式接收函数HAL_UART_Receive_IT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%A1%AC%E4%BB%B6"><span class="toc-number">1.3.3.</span> <span class="toc-text">后台硬件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0HAL-UART-IRQHandler"><span class="toc-number">1.3.4.</span> <span class="toc-text">函数HAL_UART_IRQHandler</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DMA%E6%A8%A1%E5%BC%8F%EF%BC%9A%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0%E5%92%8C%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">1.4.</span> <span class="toc-text">DMA模式：主要函数和注意点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DMA%E5%8F%91%E9%80%81%E5%87%BD%E6%95%B0-HAL-UART-Transmit-DMA"><span class="toc-number">1.4.1.</span> <span class="toc-text">DMA发送函数    HAL_UART_Transmit_DMA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DMA%E6%8E%A5%E6%94%B6%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.2.</span> <span class="toc-text">DMA接收函数</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/10/02/UART%E5%85%B3%E4%BA%8E%E4%B8%AD%E6%96%AD%E7%9A%84%E9%97%AE%E9%A2%98/" title="无标题">无标题</a><time datetime="2025-10-01T16:01:15.834Z" title="发表于 2025-10-02 00:01:15">2025-10-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/08/jlysdsb/" title="jlysdsb">jlysdsb</a><time datetime="2025-09-07T16:29:29.000Z" title="发表于 2025-09-08 00:29:29">2025-09-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/08/jlyssb/" title="jlyssb">jlyssb</a><time datetime="2025-09-07T16:24:49.000Z" title="发表于 2025-09-08 00:24:49">2025-09-08</time></div></div></div></div></div></div></main><footer id="footer" style="" data-deferred-background="/assets/bottom.webp"><div class="footer-other"><div class="footer-copyright"><span class="copyright">©&nbsp;2025 - 2026 By jiaojiaoshift</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer="" src="/js/performance.js"></script><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
