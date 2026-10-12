@@ -1,16 +1,16 @@
-/* Same full-screen photo and positioning as Butterfly; smaller files per viewport. */
-#page-header.full_page.optimized-hero {
-  background-image: url('/assets/mainpage-desktop.webp?v=ac9685b2');
+/* Use the supplied original for every banner, with CSS-only composition. */
+#page-header.optimized-hero {
+  background-image: url('/assets/mainpage.jpg?v=original-32d608fe');
 }
 
-@media (max-width: 767px) and (max-aspect-ratio: 3/5) {
-  #page-header.full_page.optimized-hero {
-    background-image: url('/assets/mainpage-mobile.webp?v=ac9685b2');
-  }
+#page-header.post-bg.optimized-hero {
+  background-position: center 30%;
 }
 
 @media (max-width: 767px) {
-  #page-header.full_page.optimized-hero {
+  #page-header.optimized-hero {
+    /* Keep both faces in view without cropping or recompressing the file. */
+    background-position: 66% center;
     /* Avoid repainting a fixed, full-screen background during touch scrolling. */
     background-attachment: scroll;
   }
