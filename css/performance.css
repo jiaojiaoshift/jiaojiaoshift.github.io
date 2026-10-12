@@ -1,11 +1,11 @@
 /* Same full-screen photo and positioning as Butterfly; smaller files per viewport. */
 #page-header.full_page.optimized-hero {
-  background-image: url('/assets/mainpage-desktop.webp');
+  background-image: url('/assets/mainpage-desktop.webp?v=ac9685b2');
 }
 
 @media (max-width: 767px) and (max-aspect-ratio: 3/5) {
   #page-header.full_page.optimized-hero {
-    background-image: url('/assets/mainpage-mobile.webp');
+    background-image: url('/assets/mainpage-mobile.webp?v=ac9685b2');
   }
 }
 
